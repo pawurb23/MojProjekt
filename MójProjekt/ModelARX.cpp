@@ -21,12 +21,14 @@ double ModelARX::saturacja(double wartosc, double min, double max) {
 
 void ModelARX::setWspA(std::vector<double> noweA) {
 	
+	if (noweA.empty()) { return; }
 	wspA = noweA;
 	historiaY.resize(wspA.size(), 0.0);
 }
 
 void ModelARX::setWspB(std::vector<double> noweB) {
 	
+	if (noweB.empty()) { return; }
 	wspB = noweB;
 	historiaU.resize(wspB.size(), 0.0);
 }
