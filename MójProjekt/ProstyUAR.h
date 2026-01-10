@@ -32,4 +32,8 @@ public:
 
 	void setPID(double k, double ti, double td);
 	void setModel(std::vector<double> A, std::vector<double> B, int k, double z);
+
+	double getP() { return regulator->getUp(); }
+	double getI() { return regulator->getUi(); }
+	double getD() { return regulator->getUd(); }
 };
