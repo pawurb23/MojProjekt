@@ -14,11 +14,23 @@ void RegulatorPID::resetPamieci() {
 	poprzedni_uchyb = 0.0;
 }
 
+void RegulatorPID::zresetujCalke() {
+
+	suma_uchybow = 0.0;
+	ui = 0.0;
+}
+
+void RegulatorPID::setOgraniczeniaCalki(double min, double max) {
+
+	min_ui = min;
+	max_ui = max;
+}
+
 void RegulatorPID::setStalaWzm(double k) { Kp = k; }
 
 void RegulatorPID::setStalaCalk(double ti) { Ti = ti; }
 
-void RegulatorPID::setStalaRoz(double td) {	Td = td; }
+void RegulatorPID::setStalaRoz(double td) { Td = td; }
 
 void RegulatorPID::setNastawy(double k, double ti, double td) {
 
@@ -35,7 +47,7 @@ void RegulatorPID::setLiczCalk(LiczCalk tryb) {
 		return;
 	}
 
-	if(tryb == LiczCalk::Zew) { suma_uchybow = suma_uchybow * Ti; }
+	if (tryb == LiczCalk::Zew) { suma_uchybow = suma_uchybow * Ti; }
 	else { suma_uchybow = suma_uchybow / Ti; }
 
 	tryb_calkowania = tryb;
@@ -59,6 +71,16 @@ double RegulatorPID::symuluj(double uchyb) {
 		}
 	}
 	else { ui = 0.0; }
+
+	if (aw_aktywne) {
+
+		double stare_ui = ui;
+
+		if (ui > max_ui) ui = max_ui;
+		else if (ui < min_ui) ui = min_ui;
+
+		if (abs(Ti) > 0.000001 && ui != stare_ui) { suma_uchybow = ui * Ti; }
+	}
 
 	ud = Td * (uchyb - poprzedni_uchyb);
 	poprzedni_uchyb = uchyb;
