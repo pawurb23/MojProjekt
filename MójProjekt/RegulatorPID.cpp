@@ -6,6 +6,9 @@ RegulatorPID::RegulatorPID(double k, double ti, double td)
 	suma_uchybow = 0.0;
 	poprzedni_uchyb = 0.0;
 	tryb_calkowania = LiczCalk::Zew;
+	up = 0.0;
+	ui = 0.0;
+	ud = 0.0;
 }
 
 void RegulatorPID::resetPamieci() {
@@ -18,12 +21,6 @@ void RegulatorPID::zresetujCalke() {
 
 	suma_uchybow = 0.0;
 	ui = 0.0;
-}
-
-void RegulatorPID::setOgraniczeniaCalki(double min, double max) {
-
-	min_ui = min;
-	max_ui = max;
 }
 
 void RegulatorPID::setStalaWzm(double k) { Kp = k; }
@@ -71,16 +68,6 @@ double RegulatorPID::symuluj(double uchyb) {
 		}
 	}
 	else { ui = 0.0; }
-
-	if (aw_aktywne) {
-
-		double stare_ui = ui;
-
-		if (ui > max_ui) ui = max_ui;
-		else if (ui < min_ui) ui = min_ui;
-
-		if (abs(Ti) > 0.000001 && ui != stare_ui) { suma_uchybow = ui * Ti; }
-	}
 
 	ud = Td * (uchyb - poprzedni_uchyb);
 	poprzedni_uchyb = uchyb;

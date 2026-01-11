@@ -33,8 +33,6 @@ public:
 
 	void setPID(double k, double ti, double td);
 	void setTrybPID(RegulatorPID::LiczCalk tryb);
-	void setLimityCalki(double min, double max);
-	void setAntiWindup(bool aktywne);
 
 	void setModel(std::vector<double> A, std::vector<double> B, int k, double z);
 	void setOgraniczenia(double umin, double umax, double ymin, double ymax, bool aktywne);

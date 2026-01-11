@@ -59,19 +59,6 @@ void ProstyUAR::setTrybPID(RegulatorPID::LiczCalk tryb) {
     if (regulator) regulator->setLiczCalk(tryb);
 }
 
-void ProstyUAR::setLimityCalki(double min, double max) {
-
-    if (regulator) {
-
-        regulator->setOgraniczeniaCalki(min, max);
-    }
-}
-
-void ProstyUAR::setAntiWindup(bool aktywne) {
-
-    if (regulator) regulator->setAntiWindup(aktywne);
-}
-
 void ProstyUAR::setModel(std::vector<double> A, std::vector<double> B, int k, double z) {
 
     if (model) {
